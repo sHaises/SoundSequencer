@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+    <style>
+        .file-group {
+            margin-bottom: 10px;
+        }
+        .deletePair {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload .wav and .txt files</h1>
+    <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+        
+        <!-- File upload groups container -->
+        <div id="fileGroups">
+            <!-- Initial file upload group -->
+            <div class="file-group">
+                <label for="wav_file1">WAV file:</label>
+                <input type="file" name="wav_file1" id="wav_file1" required>
+                <label for="txt_file1">TXT file:</label>
+                <input type="file" name="txt_file1" id="txt_file1" required>
+                <button type="button" class="deletePair">Delete Pair</button>
+            </div>
+        </div>
+
+        <!-- Add Pair button -->
+        <button type="button" id="addPairButton">Add Pair</button>
+        
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <!-- JavaScript for adding/deleting file upload groups -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const addPairButton = document.getElementById('addPairButton');
+            const fileGroups = document.getElementById('fileGroups');
+            let fileCount = 1;
+
+            // Function to create a new file upload group
+            function createFileGroup() {
+                fileCount++;
+                const fileGroup = document.createElement('div');
+                fileGroup.className = 'file-group';
+                fileGroup.innerHTML = `
+                    <label for="wav_file${fileCount}">WAV file:</label>
+                    <input type="file" name="wav_file${fileCount}" id="wav_file${fileCount}" required>
+                    <label for="txt_file${fileCount}">TXT file:</label>
+                    <input type="file" name="txt_file${fileCount}" id="txt_file${fileCount}" required>
+                    <button type="button" class="deletePair">Delete Pair</button>
+                `;
+                fileGroups.appendChild(fileGroup);
+                setupDeleteListeners();
+            }
+
+            // Function to setup delete button listeners
+            function setupDeleteListeners() {
+                const deleteButtons = document.querySelectorAll('.deletePair');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        this.parentNode.remove();
+                    });
+                });
+            }
+
+            // Initial setup
+            setupDeleteListeners();
+
+            // Add Pair button click listener
+            addPairButton.addEventListener('click', function() {
+                createFileGroup();
+            });
+        });
+    </script>
+</body>
+</html>
+

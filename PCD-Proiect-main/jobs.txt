@@ -1,0 +1,6 @@
+./ echo "Job 1"
+./1/ echo "Job 2"
+./1/ ls -l
+./1/1/ ./sequencer cymbals.wav instructions
+./1/2/ ./sequencer harp.wav instructions
+./ date

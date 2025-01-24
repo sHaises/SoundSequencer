@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .file-pair {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload .wav and .txt files</h1>
+    <div id="filePairs">
+        <div class="file-pair">
+            <label>WAV file:</label>
+            <input type="file" name="wav_file" required>
+            <label>TXT file:</label>
+            <input type="file" name="txt_file" required>
+            <button type="button" onclick="removeFilePair(this)">Delete</button>
+        </div>
+    </div>
+    <button type="button" onclick="addFilePair()">Add File Pair</button>
+    <button type="button" onclick="uploadFiles()">Upload</button>
+
+    <script>
+        function addFilePair() {
+            var filePairs = document.getElementById('filePairs');
+            var newPair = document.createElement('div');
+            newPair.className = 'file-pair';
+            newPair.innerHTML = `
+                <label>WAV file:</label>
+                <input type="file" name="wav_file" required>
+                <label>TXT file:</label>
+                <input type="file" name="txt_file" required>
+                <button type="button" onclick="removeFilePair(this)">Delete</button>
+            `;
+            filePairs.appendChild(newPair);
+        }
+
+        function removeFilePair(button) {
+            button.parentNode.remove();
+        }
+
+        function uploadFiles() {
+            var formData = new FormData();
+            var filePairs = document.getElementsByClassName('file-pair');
+            for (var i = 0; i < filePairs.length; i++) {
+                var wavFile = filePairs[i].querySelector('input[name="wav_file"]').files[0];
+                var txtFile = filePairs[i].querySelector('input[name="txt_file"]').files[0];
+                formData.append('wav_files', wavFile);
+                formData.append('txt_files', txtFile);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/upload',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert('Files uploaded successfully!');
+                },
+                error: function(error) {
+                    alert('Error uploading files: ' + error.responseText);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+
