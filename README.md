@@ -3,9 +3,13 @@
 A lightweight C++ sound sequencer that uses WAV files and text-based sequencing instructions to generate music. The application follows a client-server architecture, where the client sends a WAV file and a TXT file defining the sequence. The server processes the instructions and plays the corresponding sound.
 
 ✨ Features
+
 📁 Custom Sound Support – Clients can send any WAV file for sequencing.
+
 📜 Text-Based Sequencing – Define playback timing in a simple TXT file.
+
 🌐 Client-Server Model – Remote sound sequencing over a network.
+
 ⚡ Efficient C++ Implementation – Low-latency performance.
 
 🔧 How It Works
